@@ -1,13 +1,13 @@
-# Consumer ELB Module
+# Consumer EC2 Module
 
-This repo contains a Module to deploy a [Elastic Load Balancer (ELB)](https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/introduction.html) on 
+This repo contains a Module to deploy a [Elastic Compute Cloud (EC2) instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html) on 
 [AWS](https://aws.amazon.com) using [Terraform](https://www.terraform.io/). 
 
-![ELB Example](https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/images/internet_facing_load_balancer.png)
+![EC2 Example](https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/images/internet_facing_load_balancer.png)
 
 This Module works well with the following related modules:
 
-* Consumer EC2 Module
+* Consumer ELB Module
 <!---
 * [install-vault](https://github.com/hashicorp/terraform-azurerm-vault/tree/master/modules/install-vault): This module can be used to install Vault. It can be used in a 
   [Packer](https://www.packer.io/) template to create a Vault 
@@ -34,8 +34,8 @@ This module is maintained by the Organization's Infrastructure Team.  Email infr
 
 | Version | Description | Security Team Approval? | Approver | Approval Date|
 |------|-------------|:----:|:-----:|:-----:|
-| v1.1 | closed firewall ports | Yes | John Doe | 01/01/2019 |
-| v1.0 | Initial ELB | No | N/A | N/A |
+| v1.5 | Adjusted default instance size | Yes | John Doe | 01/01/2019 |
+| v1.4 | Initial EC2 Module | No | N/A | N/A |
 
 <!--
 ## How do you use this Module?
@@ -115,17 +115,6 @@ Root module calls these modules which can also be used separately to create inde
 ## Usage
 
 ```hcl
-module "elb" {
-  source  = "app.terraform.io/<YOURTFEORGNAME>/consumer-elb/aws"
-  version = "1.13"
-  name = "${var.name}-elb"
-  environment = "${var.environment}"
-  
-  # ELB attachments
-  number_of_instances = "${var.number_of_instances}"
-  instances           = ["${module.ec2_instances.id}"]
-}
-  
 module "ec2_instances" {
   source = "app.terraform.io/<YOURTFEORGNAME>/consumer-ec2-instance/aws"
   version = "1.4"
@@ -140,10 +129,8 @@ module "ec2_instances" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| environment | Choose: dev,stage,prod | string | - | yes |
-| instances | List of instances ID to place in the ELB pool | list | `<list>` | yes |
-| name | The name of the ELB | string | - | yes |
-| number_of_instances | Number of instances to attach to ELB | string | `2` | no |
+| name | The name of the EC2 instance | string | - | yes |
+| instance_count | Number of EC2 instances to create | int |  | yes |
 
 <!--
 | access_logs | An access logs block | list | `<list>` | no |
@@ -165,7 +152,7 @@ This module contains no outputs.
 
 | Name | Description |
 |------|-------------|
-
+| id | list containing EC2 instance ids |
 
 <!--
 | Name | Description |
@@ -184,13 +171,12 @@ This module contains no outputs.
 
 | Name | Description |
 |------|-------------|
-| security group | Ingress: Allow TCP port 80 from 0.0.0.0/0|
-| listener | lb_port = 80 lb_protocol = "http" instance_port = "8080" instance_protocol = "http" |
-| health check | healthy_threshold = 2 unhealthy_threshold = 2 timeout = 3 interval = 30 target = "HTTP:8080/" |
+| instance type | t2.micro|
+| OS Image | "ubuntu/images/hvm-ssd/ubuntu-trusty-14.04-amd64-server-*" |
 
 ## Further Reading
 
-* [Complete ELB example](https://github.com/terraform-aws-modules/terraform-aws-elb/tree/master/examples/complete)
+* [Complete EC2 example](https://github.com/terraform-aws-modules/terraform-aws-ec2-instance/tree/master/examples)
 
 <!--
 ## Known Issues/Limitations
