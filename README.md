@@ -34,8 +34,8 @@ This module is maintained by the Organization's Infrastructure Team.  Email infr
 
 | Version | Description | Security Team Approval? | Approver | Approval Date|
 |------|-------------|:----:|:-----:|:-----:|
-| v1.26.0 | Default t3.micro instance size | Yes | John Doe | 01/01/2019 |
-| v1.25.0 | Default t2.micro instance size | Yes | John Doe | 01/01/2019 |
+| v1.26.0 | Default t3.micro instance size | Yes | Peter Leung | 07/07/2020 |
+| v1.25.0 | Default t2.micro instance size | Yes | Peter Leung | 07/06/2020 |
 | v1.24.0 | Initial EC2 Module | No | N/A | N/A |
 
 <!--
