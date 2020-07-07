@@ -18,6 +18,8 @@ resource "aws_instance" "this" {
   count = var.instance_count
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
+  region = "us-east-1"
+
 
   tags = {
     Owner = "Consumer"
