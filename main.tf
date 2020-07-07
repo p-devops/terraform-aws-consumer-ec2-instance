@@ -1,3 +1,7 @@
+provider "aws" {
+  region = "us-east-1"
+}
+
 data "aws_ami" "ubuntu" {
   most_recent = true
 
@@ -17,11 +21,9 @@ data "aws_ami" "ubuntu" {
 resource "aws_instance" "this" {
   count = var.instance_count
   ami           = data.aws_ami.ubuntu.id
-  instance_type = "t2.micro"
-  region = "us-east-1"
-
+  instance_type = "t3.micro"
 
   tags = {
-    Owner = "Consumer"
+    Owner = "pleung"
   }
 }
